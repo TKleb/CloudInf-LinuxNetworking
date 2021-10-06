@@ -1,5 +1,6 @@
 ## Commands for OSPF Routing
 #### 1. Setting up Virtual Machines
+---
 Each of the Machines hostname needs to be changed: 
 ```console
 hostname RX
@@ -13,6 +14,7 @@ Transient hostname: R1
 ```
 
 #### 2. IP Address Assignment
+---
 To edit the netplan file use:
 ```console
 sudo nano /etc/netplan/50-cloud-init.yaml
@@ -115,6 +117,7 @@ netplan apply
 ```
 use `ip addr` to check if the netplan applied correctly to each of the interfaces.
 #### 3. BIRD for OSPF
+---
 First open the bird.conf file to edit it:
 ```console
 sudo nano /etc/bird/bird.conf
@@ -362,3 +365,11 @@ bird> show ospf state
 # ospf neighborship
 bird> show ospf neighbors
 ```
+#### IP Forwarding
+---
+To enable IP forwarding we have to edit the sysctl configurations
+```console
+sudo nano /etc/sysctl.conf
+```
+Find the commented out line `net.ipv4.ip_forward=1` and enable it for each router.
+
