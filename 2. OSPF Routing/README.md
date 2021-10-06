@@ -7,7 +7,7 @@ hostname RX
 And check if the hostname changed correctly by using:
 ```console
 hostnamectl
---
+-- output --
 Static hostname: ubuntu
 Transient hostname: R1
 ```
@@ -116,4 +116,246 @@ First open the bird.conf file to edit it:
 ```console
 sudo nano /etc/bird/bird.conf
 ```
+Edit the files as followed:
+R1
+```console
+protocol device {
+    scan time 10;
+}
 
+protocol kernel {
+        metric 64;         
+        import all;
+        learn;
+        export all;     
+}
+
+router id 1.1.1.1;
+
+protocol ospf MyOSPF {
+ area 0 {
+    stub no;
+    interface "ens2" {
+       hello 10;
+       retransmit 6;
+       cost 10;
+       transmit delay 5;
+       dead count 5;
+       wait 50;
+       type broadcast;
+       bfd;
+    };
+  };
+}  
+```
+R2
+```console
+protocol device {
+    scan time 10;
+}
+
+protocol kernel {
+        metric 64;         
+        import all;
+        learn;
+        export all;     
+}
+
+router id 2.2.2.2;
+
+protocol ospf MyOSPF {
+ area 0 {
+    stub no;
+    interface "ens2" {
+       hello 10;
+       retransmit 6;
+       cost 10;
+       transmit delay 5;
+       dead count 5;
+       wait 50;
+       type broadcast;
+       bfd;
+    };
+    interface "ens3" {
+      hello 10;
+      retransmit 6;
+      cost 10;
+      transmit delay 5;
+      dead count 5;
+      wait 50;
+      type ptp;
+      bfd;
+    };
+    interface "ens4" {
+      hello 10;
+      retransmit 6;
+      cost 10;
+      transmit delay 5;
+      dead count 5;
+      wait 50;
+      type ptp;
+      bfd;
+    };
+  };
+}
+```
+R3
+```console
+protocol device {
+    scan time 10;
+}
+
+protocol kernel {
+        metric 64;         
+        import all;
+        learn;
+        export all;     
+}
+
+router id 3.3.3.3;
+
+protocol ospf MyOSPF {
+ area 0 {
+    stub no;
+    interface "ens2" {
+       hello 10;
+       retransmit 6;
+       cost 10;
+       transmit delay 5;
+       dead count 5;
+       wait 50;
+       type broadcast;
+       bfd;
+    };
+    interface "ens3" {
+      hello 10;
+      retransmit 6;
+      cost 10;
+      transmit delay 5;
+      dead count 5;
+      wait 50;
+      type ptp;
+      bfd;
+    };
+    interface "ens4" {
+      hello 10;
+      retransmit 6;
+      cost 10;
+      transmit delay 5;
+      dead count 5;
+      wait 50;
+      type ptp;
+      bfd;
+    };
+  };
+}
+```
+R4
+```console
+protocol device {
+    scan time 10;
+}
+
+protocol kernel {
+        metric 64;         
+        import all;
+        learn;
+        export all;     
+}
+
+router id 4.4.4.4;
+
+protocol ospf MyOSPF {
+ area 0 {
+    stub no;
+    interface "ens2" {
+       hello 10;
+       retransmit 6;
+       cost 10;
+       transmit delay 5;
+       dead count 5;
+       wait 50;
+       type broadcast;
+       bfd;
+    };
+    interface "ens3" {
+      hello 10;
+      retransmit 6;
+      cost 10;
+      transmit delay 5;
+      dead count 5;
+      wait 50;
+      type broadcast;
+      bfd;
+   };
+  };
+}
+```
+R5
+```console
+protocol device {
+    scan time 10;
+}
+
+protocol kernel {
+        metric 64;         
+        import all;
+        learn;
+        export all;     
+}
+
+router id 5.5.5.5;
+
+protocol ospf MyOSPF {
+ area 0 {
+    stub no;
+    interface "ens2" {
+       hello 10;
+       retransmit 6;
+       cost 10;
+       transmit delay 5;
+       dead count 5;
+       wait 50;
+       type broadcast;
+       bfd;
+    };
+    interface "ens3" {
+      hello 10;
+      retransmit 6;
+      cost 10;
+      transmit delay 5;
+      dead count 5;
+      wait 50;
+      type ptp;
+      bfd;
+   };
+  };
+}
+```
+Don't forget to delete the already existed routerID and remove the # in front of export inside the "Protocol Kernel" settings. 
+To apply the Setting use:
+```console
+sudo systemctl restart bird
+```
+Check the status with:
+```console
+sudo systemctl status bird
+```
+Check if the OSPF worked:
+```console
+sudo birdc
+BIRD 1.6.3 ready.
+bird>
+
+# general bird status
+bird> show status
+
+# ospf protocol information
+bird> show ospf
+
+# ospf propagated routes
+bird> show ospf state
+
+# ospf neighborship
+bird> show ospf neighbors
+```
