@@ -95,9 +95,6 @@ network:
         ens2:
             dhcp4: no
             addresses: [172.16.0.100/24]
-            routes:
-            - to: 0.0.0.0/0
-              via: 172.16.0.1
 ```
 MITM
 ```console
