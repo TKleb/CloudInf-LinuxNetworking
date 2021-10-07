@@ -398,7 +398,7 @@ ip link set dev <interface> [up/down]
 ###### Passive Interface
 To check if the client and webserver recieve any OSPF messages use wireshark with the command:
 ```console
-tshark -i <interface> -Y 'ospf'
+tshark -i <interface> -Y "ospf"
 ```
 ###### Access Website
 To check if the client can access the webserver use curl with the ip of the webserver's interface and the port it listens to:
