@@ -7,7 +7,7 @@ R5
 ```console
 iperf3 -s
 ```
-Create the reference values: ping with 10 packets and iperf connection witout disturbances
+Create the reference values: ping with 10 packets and iperf connection witout disturbances  
 R2
 ```console
 ping 10.0.5.2 [-c 10]

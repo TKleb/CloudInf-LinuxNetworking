@@ -19,7 +19,7 @@ To edit the netplan file use:
 ```console
 sudo nano /etc/netplan/50-cloud-init.yaml
 ```
-Edit the file as followed: **NO TABS!**
+Edit the file as followed: **NO TABS!**  
 R1
 ```console
 network:
@@ -122,7 +122,7 @@ First open the bird.conf file to edit it:
 ```console
 sudo nano /etc/bird/bird.conf
 ```
-Edit the files as followed:
+Edit the files as followed:  
 R1
 ```console
 protocol device {
