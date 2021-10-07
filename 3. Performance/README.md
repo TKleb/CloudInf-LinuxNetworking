@@ -39,9 +39,3 @@ To add X amount of packet loss to the connection use:
 ```console
 sudo tc qdisc add dev eth0 root netem loss X%
 ```
-#### Bandwidth Limitations
----
-In addition to the above commands you can also manipulate the bandwidth for the connection through R3 with X, Y, Z as values to choose:
-```console
-tc qdisc add dev eth0 root tbf rate Xmbit burst Ykbit latency Zms
-```
