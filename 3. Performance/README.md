@@ -14,6 +14,7 @@ ping 10.0.5.2 [-c 10]
 iperf3 -c 10.0.5.2
 ```
 #### Reset Traffic Control
+---
 After each of the commands below enter
 ```console
 sudo tc qdisc del dev eth0 root
