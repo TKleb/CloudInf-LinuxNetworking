@@ -22,26 +22,26 @@ sudo tc qdisc del dev eth0 root
 to delete the entered settings of traffic control.
 #### Delay
 ---
-To add delay to each iperf and ping enter following code to R3:
+To add X delay to each iperf and ping enter following code to R3:
 ```console
-sudo tc qdisc add dev eth0 root netem delay X ms
+sudo tc qdisc add dev eth0 root netem delay Xms
 ```
 #### Jitter
 ---
-To add additional Jitter enter the same command used for delay with an additional time that acts as the jitter value.  
+To add Y additional Jitter enter the same command used for delay with an additional time that acts as the jitter value.  
 R3
 ```console
-sudo tc qdisc add dev eth0 root netem delay X ms Y ms
+sudo tc qdisc add dev eth0 root netem delay Xms Yms
 ```
 #### Packet Loss
 ---
-To add packet loss to the connection use:
+To add X amount of packet loss to the connection use:
 ```console
-sudo tc qdisc add dev eth0 root netem loss X %
+sudo tc qdisc add dev eth0 root netem loss X%
 ```
 #### Bandwidth Limitations
 ---
-In addition to the above commands you can also manipulate the bandwidth for the connection through R3:
+In addition to the above commands you can also manipulate the bandwidth for the connection through R3 with X, Y, Z as values to choose:
 ```console
-tc qdisc add dev eth0 root tbf rate 1mbit burst 32kbit latency 400ms
+tc qdisc add dev eth0 root tbf rate Xmbit burst Ykbit latency Zms
 ```
