@@ -337,6 +337,7 @@ protocol ospf MyOSPF {
        bfd;
     };
     interface "ens3" {
+      stub;
       hello 10;
       retransmit 6;
       cost 10;
@@ -386,4 +387,21 @@ Find the commented out line `net.ipv4.ip_forward=1` and enable it for each route
 Then to save and load the new settings run
 ```console
 sysctl -p
+```
+#### Verification
+---
+###### Route Failover
+To set a specific interface up / down
+```console
+ip link set dev <interface> [up/down]
+```
+###### Passive Interface
+To check if the client and webserver recieve any OSPF messages use wireshark with the command:
+```console
+tshark -i <interface> -Y 'ospf'
+```
+###### Access Website
+To check if the client can access the webserver use curl with the ip of the webserver's interface and the port it listens to:
+```console
+curl 192.168.1.100:8080
 ```
