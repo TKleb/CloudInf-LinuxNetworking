@@ -2,7 +2,7 @@
 To test performance use iperf with R5 as server and R2 as client. R3 acts as traffic control router. 
 #### Creating References
 ---
-Setup Server for iperf on R5
+Setup Server for iperf on R5<\br>
 R5
 ```console
 iperf3 -s
@@ -28,7 +28,7 @@ sudo tc qdisc add dev eth0 root netem delay X ms
 ```
 #### Jitter
 ---
-To add additional Jitter enter the same command used for delay with an additional time that acts as the jitter value.
+To add additional Jitter enter the same command used for delay with an additional time that acts as the jitter value.  
 R3
 ```console
 sudo tc qdisc add dev eth0 root netem delay X ms Y ms
