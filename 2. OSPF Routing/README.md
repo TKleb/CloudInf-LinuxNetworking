@@ -142,6 +142,17 @@ protocol ospf MyOSPF {
  area 0 {
     stub no;
     interface "ens2" {
+       stub;
+       hello 10;
+       retransmit 6;
+       cost 10;
+       transmit delay 5;
+       dead count 5;
+       wait 50;
+       type broadcast;
+       bfd;
+    };
+    interface "ens3" {
        hello 10;
        retransmit 6;
        cost 10;
@@ -372,4 +383,7 @@ To enable IP forwarding we have to edit the sysctl configurations
 sudo nano /etc/sysctl.conf
 ```
 Find the commented out line `net.ipv4.ip_forward=1` and enable it for each router.
-
+Then to save and load the new settings run
+```console
+sysctl -p
+```
