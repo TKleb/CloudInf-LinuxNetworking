@@ -39,3 +39,4 @@ To add X amount of packet loss to the connection use:
 ```console
 sudo tc qdisc add dev eth0 root netem loss X%
 ```
+$
