@@ -8,7 +8,7 @@ First add a filter for icmp (ping) packets:
 ```console
 sudo nft filter forward ip protocol icmp drop
 ```
-Since nmap has to be disabled aswell drop everything that doesnt originate from the port 8080.
+Since nmap has to be disabled aswell drop everything entering "ens3" (iif...) that doesnt originate from the port 8080.
 ```console
 sudo nft filter forward iifname "ens3" tcp sport != 8080 drop
 ```
@@ -23,7 +23,7 @@ With adding "policy drop" you tell the router to drop everything that wasn't all
 ```console
 sudo nft filter forward policy drop
 ```
-Since the router 5 itself isn't allowed to either curl or ping you have to add that. Since "ens3" ist the output interface for this router ("oif...") the command to disable curl by not allowing tcp connection to port 8080 looks like this: 
+Since the router 5 itself isn't allowed to either curl or ping you have to add that. Since "ens3" ist the output interface for this router (oif...) the command to disable curl by not allowing tcp connection to port 8080 looks like this: 
 ```console
 sudo nft filter output oifname "ens3" tcp dport 8080 drop
 ```
