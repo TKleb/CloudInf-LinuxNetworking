@@ -23,7 +23,7 @@ With adding "policy drop" you tell the router to drop everything that wasn't all
 ```console
 sudo nft filter forward policy drop
 ```
-Since the router 5 itself isn't allowed to either curl or ping you have to add that. Since "ens3" ist the output interface for this router (oif...) the command to disable curl by not allowing tcp connection to port 8080 looks like this: 
+"ens3" is the output interface for this router (oif...) the command to disable curl by not allowing tcp connection to port 8080 looks like this: 
 ```console
 sudo nft filter output oifname "ens3" tcp dport 8080 drop
 ```
