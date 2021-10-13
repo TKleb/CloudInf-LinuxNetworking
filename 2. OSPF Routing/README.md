@@ -109,6 +109,9 @@ network:
         ens2:
             addresses: [10.0.255.2/30]
             dhcp4: no
+            routes:
+            - to: 0.0.0.0/0
+              via: 10.0.255.1
 ```
 After configuring the Routers and Users apply the netplan:
 ```console
@@ -130,10 +133,10 @@ protocol device {
 }
 
 protocol kernel {
-        metric 64;         
-        import all;
-        learn;
-        export all;     
+    metric 64;         
+    import all;
+    learn;
+    export all;     
 }
 
 router id 1.1.1.1;
@@ -142,25 +145,25 @@ protocol ospf MyOSPF {
  area 0 {
     stub no;
     interface "ens2" {
-       stub;
-       hello 10;
-       retransmit 6;
-       cost 10;
-       transmit delay 5;
-       dead count 5;
-       wait 50;
-       type broadcast;
-       bfd;
+      stub;
+      hello 10;
+      retransmit 6;
+      cost 10;
+      transmit delay 5;
+      dead count 5;
+      wait 50;
+      type broadcast;
+      bfd;
     };
     interface "ens3" {
-       hello 10;
-       retransmit 6;
-       cost 10;
-       transmit delay 5;
-       dead count 5;
-       wait 50;
-       type broadcast;
-       bfd;
+      hello 10;
+      retransmit 6;
+      cost 10;
+      transmit delay 5;
+      dead count 5;
+      wait 50;
+      type broadcast;
+      bfd;
     };
   };
 }  
@@ -172,10 +175,10 @@ protocol device {
 }
 
 protocol kernel {
-        metric 64;         
-        import all;
-        learn;
-        export all;     
+    metric 64;         
+    import all;
+    learn;
+    export all;     
 }
 
 router id 2.2.2.2;
@@ -184,14 +187,14 @@ protocol ospf MyOSPF {
  area 0 {
     stub no;
     interface "ens2" {
-       hello 10;
-       retransmit 6;
-       cost 10;
-       transmit delay 5;
-       dead count 5;
-       wait 50;
-       type broadcast;
-       bfd;
+      hello 10;
+      retransmit 6;
+      cost 10;
+      transmit delay 5;
+      dead count 5;
+      wait 50;
+      type broadcast;
+      bfd;
     };
     interface "ens3" {
       hello 10;
@@ -223,10 +226,10 @@ protocol device {
 }
 
 protocol kernel {
-        metric 64;         
-        import all;
-        learn;
-        export all;     
+    metric 64;         
+    import all;
+    learn;
+    export all;     
 }
 
 router id 3.3.3.3;
@@ -235,14 +238,14 @@ protocol ospf MyOSPF {
  area 0 {
     stub no;
     interface "ens2" {
-       hello 10;
-       retransmit 6;
-       cost 10;
-       transmit delay 5;
-       dead count 5;
-       wait 50;
-       type broadcast;
-       bfd;
+      hello 10;
+      retransmit 6;
+      cost 10;
+      transmit delay 5;
+      dead count 5;
+      wait 50;
+      type broadcast;
+      bfd;
     };
     interface "ens3" {
       hello 10;
@@ -274,10 +277,10 @@ protocol device {
 }
 
 protocol kernel {
-        metric 64;         
-        import all;
-        learn;
-        export all;     
+    metric 64;         
+    import all;
+    learn;
+    export all;     
 }
 
 router id 4.4.4.4;
@@ -286,14 +289,14 @@ protocol ospf MyOSPF {
  area 0 {
     stub no;
     interface "ens2" {
-       hello 10;
-       retransmit 6;
-       cost 10;
-       transmit delay 5;
-       dead count 5;
-       wait 50;
-       type broadcast;
-       bfd;
+      hello 10;
+      retransmit 6;
+      cost 10;
+      transmit delay 5;
+      dead count 5;
+      wait 50;
+      type broadcast;
+      bfd;
     };
     interface "ens3" {
       hello 10;
@@ -304,7 +307,18 @@ protocol ospf MyOSPF {
       wait 50;
       type broadcast;
       bfd;
-   };
+    };
+    interface "ens4" {
+      stub;
+      hello 10;
+      retransmit 6;
+      cost 10;
+      transmit delay 5;
+      dead count 5;
+      wait 50;
+      type ptp;
+      bfd;
+    };
   };
 }
 ```
@@ -315,10 +329,10 @@ protocol device {
 }
 
 protocol kernel {
-        metric 64;         
-        import all;
-        learn;
-        export all;     
+    metric 64;         
+    import all;
+    learn;
+    export all;     
 }
 
 router id 5.5.5.5;
@@ -327,14 +341,14 @@ protocol ospf MyOSPF {
  area 0 {
     stub no;
     interface "ens2" {
-       hello 10;
-       retransmit 6;
-       cost 10;
-       transmit delay 5;
-       dead count 5;
-       wait 50;
-       type broadcast;
-       bfd;
+      hello 10;
+      retransmit 6;
+      cost 10;
+      transmit delay 5;
+      dead count 5;
+      wait 50;
+      type broadcast;
+      bfd;
     };
     interface "ens3" {
       stub;
