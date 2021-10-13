@@ -17,6 +17,7 @@ sudo curl --proxy 10.0.255.2:8080 192.168.1.100:8080
 Then accept the traffic by entering "a". Then change the Tab to "Response". Enter "e" to edit the response and since the editor is vim exit by pressing ":wq" followed by "a" again to let the reponse go to the client.
 
 #### Interrupting Request And Sending Fake Response
+---
 First you need to create a python script which takes the message if it request if its destination is the webserver and sends back a custom response (In this case a similar response to the one you would get from the server but you can enter whatever you want).
 
 ```python
