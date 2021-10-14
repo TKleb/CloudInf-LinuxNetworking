@@ -26,7 +26,7 @@ from mitmproxy import http
 
 def request(flow: http.HTTPFlow) -> None:
     if "192.168.1.100:8080" in flow.request.url:
-        flow.response = http.Response.make(
+        flow.response = http.HTTPResponse.make(
             200,  # (optional) status code
             '<h1>Hello Mr. X!</h1><hr> <p>A simple hello web app, in a docker image, using debian, python and flask!</p><p>Hostname: python-flask-hello</p><p>Requests: 18<br \></p><p>Network Interface: eth0<br \>--> IP Address: 192.168.1.100<br \>--> Netmask: 255.255.255.0<br \></p>',  # (optional) content
             {"Content-Type": "text/html"}  # (optional) headers
