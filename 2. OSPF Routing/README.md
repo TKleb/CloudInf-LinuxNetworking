@@ -172,7 +172,7 @@ protocol ospf MyOSPF {
       transmit delay 5;
       dead count 3;
       wait 50;
-      type broadcast;
+      type ptp;
     };
   };
 }  
@@ -302,21 +302,21 @@ protocol ospf MyOSPF {
   area 0 {
     stub no;
     interface "ens2" {
-      hello 10;
+      hello 15;
       retransmit 6;
       cost 10;
       transmit delay 5;
-      dead count 5;
+      dead count 3;
       wait 50;
       type broadcast;
     };
     interface "ens3" {
       stub;
-      hello 10;
+      hello 15;
       retransmit 6;
       cost 10;
       transmit delay 5;
-      dead count 5;
+      dead count 3;
       wait 50;
       type ptp;
    };
