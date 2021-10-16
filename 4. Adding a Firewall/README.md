@@ -67,6 +67,16 @@ table inet filter {
         }
 }
 ```
+The connection works this way as intended but to make the firewall work stateful you have to change the forward chain to look like this:
+```console
+         chain forward {
+              type filter hook forward priority 0; policy drop;
+              ip protocol icmp drop;
+              iifname "ens3" tcp sport != 8080 drop;
+              ct state established, related accept;
+              iifname "ens2" ip saddr 172.16.0.0/24 ct state accept;
+         }    
+```
 #### Start nftables and run the Firewall
 ---
 Whenever you edit the nftables.conf (either with commands or directly in the file) you have to restart the service and sometimes reenable it.

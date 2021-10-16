@@ -1,16 +1,19 @@
 ## Commands for OSPF Routing
+This cookbook is just to follow along with each step of the lab. For more information regarding them have a look into our report in the Documents folder.
 #### 1. Setting up Virtual Machines
 ---
 Each of the Machines hostname needs to be changed: 
 ```console
-hostname RX
+sudo hostnamectl set-hostname "hostname"
 ```
+In addition to make the hostname persist after a reboot edit the file /etc/cloud/cloud.cfg and set the variable "preserve_hostname" to true. Log out of the Linux System to see the right hostname in your terminal: "ins@hostname"
+
 And check if the hostname changed correctly by using:
 ```console
 hostnamectl
 -- output --
-Static hostname: ubuntu
-Transient hostname: R1
+Static hostname: "hostname"
+
 ```
 
 #### 2. IP Address Assignment
@@ -37,6 +40,9 @@ R2
 network:
     version: 2
     ethernets:
+        lo:
+            adresses: [192.168.2.1/24]
+            dhcp4: no
         ens2:
             addresses: [10.0.1.2/30]
             dhcp4: no
@@ -52,6 +58,9 @@ R3
 network:
     version: 2
     ethernets:
+        lo:
+            adresses: [192.168.3.1/24]
+            dhcp4: no
         ens2:
             addresses: [10.0.2.2/30]
             dhcp4: no
@@ -99,7 +108,7 @@ network:
             addresses: [172.16.0.100/24]
             routes:
                 - to: 0.0.0.0/0
-                via: 172.16.0.1
+                  via: 172.16.0.1
 ```
 MITM
 ```console
@@ -125,7 +134,7 @@ First open the bird.conf file to edit it:
 ```console
 sudo nano /etc/bird/bird.conf
 ```
-Edit the files as followed:  
+Edit the files as followed: You can either   
 R1
 ```console
 protocol device {
@@ -136,34 +145,34 @@ protocol kernel {
     metric 64;         
     import all;
     learn;
-    export all;     
+    export all; 
+    persist;    
 }
 
 router id 1.1.1.1;
 
 protocol ospf MyOSPF {
- area 0 {
+  tick 2;
+  area 0 {
     stub no;
     interface "ens2" {
       stub;
-      hello 10;
+      hello 15;
       retransmit 6;
       cost 10;
       transmit delay 5;
-      dead count 5;
+      dead count 3;
       wait 50;
       type broadcast;
-      bfd;
     };
     interface "ens3" {
-      hello 10;
+      hello 15;
       retransmit 6;
       cost 10;
       transmit delay 5;
-      dead count 5;
+      dead count 3;
       wait 50;
       type broadcast;
-      bfd;
     };
   };
 }  
@@ -178,44 +187,24 @@ protocol kernel {
     metric 64;         
     import all;
     learn;
-    export all;     
+    export all;
+    persist;     
 }
 
 router id 2.2.2.2;
 
 protocol ospf MyOSPF {
- area 0 {
+  tick 2;
+  area 0 {
     stub no;
-    interface "ens2" {
-      hello 10;
+    interface "ens2", "ens3", "ens4", "lo" {
+      hello 15;
       retransmit 6;
       cost 10;
       transmit delay 5;
-      dead count 5;
+      dead count 3;
       wait 50;
       type broadcast;
-      bfd;
-    };
-    interface "ens3" {
-      hello 10;
-      retransmit 6;
-      cost 10;
-      transmit delay 5;
-      dead count 5;
-      wait 50;
-      type ptp;
-      bfd;
-    };
-    interface "ens4" {
-      hello 10;
-      retransmit 6;
-      cost 10;
-      transmit delay 5;
-      dead count 5;
-      wait 50;
-      type ptp;
-      bfd;
-    };
   };
 }
 ```
@@ -229,44 +218,24 @@ protocol kernel {
     metric 64;         
     import all;
     learn;
-    export all;     
+    export all;
+    persist;     
 }
 
 router id 3.3.3.3;
 
 protocol ospf MyOSPF {
- area 0 {
+  tick 2;
+  area 0 {
     stub no;
-    interface "ens2" {
-      hello 10;
+    interface "ens2", "ens3", "ens4", "lo" {
+      hello 15;
       retransmit 6;
       cost 10;
       transmit delay 5;
-      dead count 5;
+      dead count 3;
       wait 50;
       type broadcast;
-      bfd;
-    };
-    interface "ens3" {
-      hello 10;
-      retransmit 6;
-      cost 10;
-      transmit delay 5;
-      dead count 5;
-      wait 50;
-      type ptp;
-      bfd;
-    };
-    interface "ens4" {
-      hello 10;
-      retransmit 6;
-      cost 10;
-      transmit delay 5;
-      dead count 5;
-      wait 50;
-      type ptp;
-      bfd;
-    };
   };
 }
 ```
@@ -280,44 +249,34 @@ protocol kernel {
     metric 64;         
     import all;
     learn;
-    export all;     
+    export all;
+    persist;     
 }
 
 router id 4.4.4.4;
 
 protocol ospf MyOSPF {
- area 0 {
+  tick 2;
+  area 0 {
     stub no;
-    interface "ens2" {
-      hello 10;
+    interface "ens2", "ens3" {
+      hello 15;
       retransmit 6;
       cost 10;
       transmit delay 5;
-      dead count 5;
+      dead count 3;
       wait 50;
       type broadcast;
-      bfd;
-    };
-    interface "ens3" {
-      hello 10;
-      retransmit 6;
-      cost 10;
-      transmit delay 5;
-      dead count 5;
-      wait 50;
-      type broadcast;
-      bfd;
     };
     interface "ens4" {
       stub;
-      hello 10;
+      hello 15;
       retransmit 6;
       cost 10;
       transmit delay 5;
-      dead count 5;
+      dead count 3;
       wait 50;
       type ptp;
-      bfd;
     };
   };
 }
@@ -332,13 +291,15 @@ protocol kernel {
     metric 64;         
     import all;
     learn;
-    export all;     
+    export all; 
+    persist;    
 }
 
 router id 5.5.5.5;
 
 protocol ospf MyOSPF {
- area 0 {
+  tick 2;
+  area 0 {
     stub no;
     interface "ens2" {
       hello 10;
@@ -348,7 +309,6 @@ protocol ospf MyOSPF {
       dead count 5;
       wait 50;
       type broadcast;
-      bfd;
     };
     interface "ens3" {
       stub;
@@ -359,7 +319,6 @@ protocol ospf MyOSPF {
       dead count 5;
       wait 50;
       type ptp;
-      bfd;
    };
   };
 }
