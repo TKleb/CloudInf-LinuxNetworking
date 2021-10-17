@@ -86,3 +86,18 @@ sudo systemctl restart nftables
 ```console
 sudo systemctl enable nftables
 ```
+#### Testing Firewall
+---
+The firewall needs to be tested for pings, nmap and curl.  
+First try pinging the webserver from the client and the routers. No one should be able to bring a ping through:
+```console
+ping 192.168.1.100
+```
+Nmap should not be able to see any open port. To make nmap scan a specific portrange use the -p command:
+```console
+sudo nmap -p 1-65535 192.168.1.100
+```
+Finally test for curl. Only the client should be able to connect to the webserver with it:
+```console
+curl 192.168.1.100:8080
+```
