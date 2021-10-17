@@ -18,7 +18,7 @@ Then accept the traffic by entering "a". Then change the Tab to "Response". Ente
 
 #### Interrupting Request And Sending Fake Response
 ---
-First you need to create a python script which takes the message if it request if its destination is the webserver and sends back a custom response (In this case a similar response to the one you would get from the server but you can enter whatever you want).
+First you need to create a python script which takes the message if its request-destination is the webserver and sends back a custom response (In this case a similar response to the one you would get from the server but you can enter whatever you want).
 
 ```python
 from mitmproxy import http
