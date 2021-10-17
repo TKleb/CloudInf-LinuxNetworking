@@ -6,7 +6,7 @@ Each of the Machines hostname needs to be changed:
 ```console
 sudo hostnamectl set-hostname "hostname"
 ```
-In addition to make the hostname persist after a reboot edit the file /etc/cloud/cloud.cfg and set the variable "preserve_hostname" to true. Log out of the Linux System to see the right hostname in your terminal: "ins@hostname"
+In addition to make the hostname persist after a reboot edit the file /etc/cloud/cloud.cfg and set the variable "preserve_hostname" to true. Relog into the Linux System to see the right hostname in your terminal: "ins@hostname"
 
 And check if the hostname changed correctly by using:
 ```console
